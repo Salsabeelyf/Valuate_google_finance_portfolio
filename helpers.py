@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import constants as c
-
+from tabulate import tabulate
+import data_classes
 
 def get_price(mainElement):
     return float(mainElement.attrs['data-last-price'])
@@ -32,3 +33,27 @@ def get_price_information(ticker, exchange):
         'currency': currency,
         'usd_price': usd_price
     }
+
+def display_summary(portfolio):
+    if not isinstance(portfolio, data_classes.Portfolio):
+        raise TypeError('Please provide a Portfolio type variable!')
+
+    total_value = portfolio.get_total_value()
+    positions_data = []
+
+    for position in portfolio.positions:
+        positions_data.append([
+            position.stock.ticker,
+            position.stock.exchange,
+            position.quantity,
+            position.stock.usd_price,
+            position.quantity * position.stock.usd_price,
+            position.quantity * position.stock.usd_price / total_value * 100
+        ])
+
+    print(tabulate(sorted(positions_data, key=lambda x: x[4], reverse=True),
+             headers=['Ticker', 'Exchange', 'Quantity', 'Price', 'Market Value', '% Allocation'],
+             tablefmt='psql',
+             floatfmt='.2f'))
+
+    print(f'Total portfolio value: ${total_value:,.2f}')
