@@ -8,9 +8,9 @@ def get_price(mainElement):
     return float(mainElement.attrs['data-last-price'])
 
 def convert_currency(price, currency):
-    response = requests.get(f"{c.BASE_URL}{currency}-USD")
+    response = requests.get(f"{c.BASE_URL}{currency}-{c.PREF_CURRENCY}")
     soupResp = BeautifulSoup(response.content, 'html.parser')
-    value = float(soupResp.find('div', attrs={'data-target': 'USD'}).attrs['data-last-price'])
+    value = float(soupResp.find('div', attrs={'data-target': c.PREF_CURRENCY}).attrs['data-last-price'])
     return round(price * value,2) 
 
 def get_price_information(ticker, exchange):
@@ -22,16 +22,16 @@ def get_price_information(ticker, exchange):
 
     currency = mainElement.attrs['data-currency-code']
 
-    usd_price = price
-    if currency != 'USD':
-        usd_price = convert_currency(price, currency)
+    pref_price = price
+    if currency != c.PREF_CURRENCY:
+        pref_price = convert_currency(price, currency)
 
     return{
         'ticker': ticker,
         'exchange': exchange,
         'price': price,
         'currency': currency,
-        'usd_price': usd_price
+        'pref_price': pref_price
     }
 
 def display_summary(portfolio):
@@ -46,9 +46,9 @@ def display_summary(portfolio):
             position.stock.ticker,
             position.stock.exchange,
             position.quantity,
-            position.stock.usd_price,
-            position.quantity * position.stock.usd_price,
-            position.quantity * position.stock.usd_price / total_value * 100
+            position.stock.pref_price,
+            position.quantity * position.stock.pref_price,
+            position.quantity * position.stock.pref_price / total_value * 100
         ])
 
     print(tabulate(sorted(positions_data, key=lambda x: x[4], reverse=True),
@@ -56,4 +56,4 @@ def display_summary(portfolio):
              tablefmt='psql',
              floatfmt='.2f'))
 
-    print(f'Total portfolio value: ${total_value:,.2f}')
+    print(f'Total portfolio value: {c.PREF_CURRENCY} {total_value:,.2f}')

@@ -2,12 +2,20 @@ from data_classes import *
 from helpers import display_summary
 
 def run():
-    bns = Stock('BNS','TSE')
-    google = Stock('GOOGL', 'NASDAQ')
-    shop = Stock('SHOP','TSE')
-    msft = Stock('MSFT','NASDAQ')
 
-    portfolio = Portfolio([Position(bns,100), Position(google,30), Position(shop,10), Position(msft,2)])
+    c.PREF_CURRENCY = input('Hello, Please specify the Output Curreny: ')
+    nPositions = int(input('Number of positions: '))
+    
+    positions = []
+
+    for i in range(0,nPositions):
+        print(f'Position {i+1}:')
+        ticker = input('Ticker: ')
+        exchange = input('Exchange: ')
+        quantity = int(input('Quantity: '))
+        positions.append(Position(Stock(ticker,exchange),quantity))
+    
+    portfolio = Portfolio(positions)
 
     display_summary(portfolio)
 
