@@ -1,12 +1,26 @@
 # Google Finance Project
 
-## Steps:
+## About:
 
-* Scrape price information from google finance, given some ticker and exchange
+* Scrape price information from google finance, given some ticker and exchange from positions_input.csv input file
 
 * Summerize portfolio valuation for an arbitrary number of positions
 
-* Solution should reflect USD amounts only, but also support positions listed in other currencies i.e. should support some sort of FX-ing capability
+* Display Portfolio Summary in Table format
+
+* Store Summary in Portfolio_Summary.csv output file
+
+
+## Installing
+
+#### * Download the code from Github
+#### * Open CLI, go to the code folder and run the following command
+
+```
+pip install -r requirements.txt
+```
+
+
 
 ## Output should look like this:
 
