@@ -2,13 +2,13 @@
 
 ## About:
 
-* Scrape price information from google finance, given some ticker and exchange from positions_input.csv input file
+* Scrape price information from google finance, given some ticker and exchange from `positions_input.csv` input file
 
 * Summerize portfolio valuation for an arbitrary number of positions
 
 * Display Portfolio Summary in Table format
 
-* Store Summary in Portfolio_Summary.csv output file
+* Store Summary in `Portfolio_Summary.csv` output file
 
 
 ## Installing
@@ -22,7 +22,7 @@ pip install -r requirements.txt
 ```
 
 ## Running
-To run the google finance scraper, open the 'positions_input.csv' file and add your stock data as follows:
+To run the google finance scraper, open the `positions_input.csv` file and add your stock data as follows:
 
 ![positions_input](<Screenshot from 2024-08-06 14-50-52.png>)
 
@@ -44,6 +44,6 @@ py main.py USD
 
 Total portfolio value: USD 17,267.56
 
-#### Also all the summary data should be stored in an output csv file called 'Portfolio_Summary.csv' as follows:
+#### Also all the summary data should be stored in an output csv file called `Portfolio_Summary.csv` as follows:
 
 ![portfolio_summary](<Screenshot from 2024-08-06 15-02-03.png>)
