@@ -1,23 +1,20 @@
+import sys
 from data_classes import *
-from helpers import display_summary
 
 def run():
-
-    c.PREF_CURRENCY = input('Hello, Please specify the Output Curreny: ')
-    nPositions = int(input('Number of positions: '))
+    # Check if argument provided
+    if len(sys.argv) == 1:
+        print('Please Provide the output currency, i.e. USD')
+        exit()
     
-    positions = []
+    # Save currency if only the code is correct
+    h.check_currency(sys.argv[1])
+  
+    # Store input data from csv file in a portfolio variable
+    portfolio = Portfolio(h.read_input())
 
-    for i in range(0,nPositions):
-        print(f'Position {i+1}:')
-        ticker = input('Ticker: ')
-        exchange = input('Exchange: ')
-        quantity = int(input('Quantity: '))
-        positions.append(Position(Stock(ticker,exchange),quantity))
-    
-    portfolio = Portfolio(positions)
-
-    display_summary(portfolio)
+    # Display summary in a representative way
+    h.display_summary(portfolio)
 
 if __name__ == '__main__':
     run()
