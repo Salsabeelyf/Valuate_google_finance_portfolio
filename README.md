@@ -13,14 +13,26 @@
 
 ## Installing
 
-#### * Download the code from Github
-#### * Open CLI, go to the code folder and run the following command
+#### Download the code from Github
+#### Open CLI and Go to the code folder
+#### Run the following command
 
 ```
 pip install -r requirements.txt
 ```
 
+## Running
+To run the google finance scraper, open the 'positions_input.csv' file and add your stock data as follows:
 
+![positions_input](<Screenshot from 2024-08-06 14-50-52.png>)
+
+Save the file, then run the following command:
+
+Pass the currency code you want the prices in as an argument
+
+```
+py main.py USD
+```
 
 ## Output should look like this:
 
@@ -32,3 +44,15 @@ pip install -r requirements.txt
 |  MSFT     |  NASDAQ   |      2    |  258.35   |   516.70  |    5.35   |
 
 Total portfolio value: $9,661.20.
+
++----------+------------+------------+---------+----------------+----------------+
+| Ticker   | Exchange   |   Quantity |   Price |   Market Value |   % Allocation |
+|----------+------------+------------+---------+----------------+----------------|
+| GOOGl    | NASDAQ     |        100 |  157.11 |       15711.00 |          90.99 |
+| BNS      | TSE        |         30 |   44.86 |        1345.80 |           7.79 |
+| SHOP     | TSE        |          4 |   52.69 |         210.76 |           1.22 |
++----------+------------+------------+---------+----------------+----------------+
+
+Total portfolio value: USD 17,267.56
+
+#### Also all the summary data should be stored in an output csv file called 'Portfolio_Summary.csv'
