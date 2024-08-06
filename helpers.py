@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from tabulate import tabulate
 import csv
+import pandas as pd
 import constants as c
 import data_classes
 
@@ -73,7 +74,7 @@ def get_price_information(ticker, exchange):
     }
 
 
-## Form a table from the portfolio data and display it to the user
+## Save the portfolio to csv file, form a table from the portfolio data and display it to the user
 def display_summary(portfolio):
     if not isinstance(portfolio, data_classes.Portfolio):
         raise TypeError('Please provide a Portfolio type variable!')
@@ -82,18 +83,28 @@ def display_summary(portfolio):
     positions_data = []
 
     for position in portfolio.positions:
-        positions_data.append([
-            position.stock.ticker,
-            position.stock.exchange,
-            position.quantity,
-            position.stock.pref_price,
-            position.quantity * position.stock.pref_price,
-            position.quantity * position.stock.pref_price / total_value * 100
-        ])
+        market_value = position.quantity * position.stock.pref_price
 
-    print(tabulate(sorted(positions_data, key=lambda x: x[4], reverse=True),
-             headers=['Ticker', 'Exchange', 'Quantity', 'Price', 'Market Value', '% Allocation'],
-             tablefmt='psql',
-             floatfmt='.2f'))
+        positions_data.append({
+            'Ticker': position.stock.ticker,
+            'Exchange': position.stock.exchange,
+            'Quantity': position.quantity,
+            'Price': position.stock.pref_price,
+            'Market Value': market_value,
+            '% Allocation': round(market_value / total_value * 100,2)
+        })
+    
+    positions_data = sorted(positions_data, key=lambda x: x['Market Value'], reverse=True)
+
+    # Display summary table
+    print(tabulate(positions_data,
+            headers='keys',
+            tablefmt='psql',
+            floatfmt='.2f'))
 
     print(f'Total portfolio value: {c.PREF_CURRENCY} {total_value:,.2f}')
+
+    # Output summary to porfolio csv file
+    positions_data.append({'Total portfolio value': f'{c.PREF_CURRENCY} {total_value:,.2f}'})
+    df = pd.DataFrame(positions_data)
+    df.to_csv(c.FILE_NAME, index=False)
