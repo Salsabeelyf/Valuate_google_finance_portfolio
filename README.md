@@ -4,7 +4,7 @@
 
 * Scrape price information from google finance, given some ticker and exchange from `positions_input.csv` input file
 
-* Summerize portfolio valuation for an arbitrary number of positions
+* Summarize portfolio valuation for an arbitrary number of positions
 
 * Display Portfolio Summary in Table format
 
