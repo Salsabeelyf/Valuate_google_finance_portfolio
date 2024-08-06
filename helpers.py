@@ -102,7 +102,7 @@ def display_summary(portfolio):
             tablefmt='psql',
             floatfmt='.2f'))
 
-    print(f'Total portfolio value: {c.PREF_CURRENCY} {total_value:,.2f}')
+    print(f'\nTotal portfolio value: {c.PREF_CURRENCY} {total_value:,.2f}')
 
     # Output summary to porfolio csv file
     positions_data.append({'Total portfolio value': f'{c.PREF_CURRENCY} {total_value:,.2f}'})
